@@ -1,0 +1,7 @@
+image_folder = 'folder location';
+filenames = dir(fullfile(image_folder,'*.png'));
+total_images = numel(filenames);
+
+for n = 1:total_images
+	full_name = fullfile(image_folder,filenames(n).name);
+	our_image = imread(full_name)
