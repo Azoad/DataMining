@@ -83,8 +83,6 @@ Folder = uigetdir('*','Select directory of a files');
 global Image_fullname;
 Image_fullname = dir(strcat(Folder,'\*','.png'));
 set(handles.folder,'string','Images Loaded','enable','off');
-%axes(handles.axes1);
-%subplot(3,7,1),imshow(image);
 
 
 % --- Executes on button press in train.
@@ -97,7 +95,7 @@ global Image_fullname;
 global mat;
 for i = 1: length(Image_fullname)
     image = strcat(Folder,'\',Image_fullname(i).name);
-    id = im2double(imread(image));
+    id = im2double(rgb2gray(imread(image)));
     mat(i,1) = i;
     imean = mean(id(:));
     mat(i,2) = imean;
@@ -115,7 +113,7 @@ for i = 1: length(Image_fullname)
     mat(i,8) = istd;
 end
 xlswrite('training.xlsx',mat);
-set(handles.train,'string','Feature Extracted and Database Created','enable','off');
+set(handles.train,'string','Feature Extracted','enable','off');
 
 % --- Executes on button press in query.
 function query_Callback(hObject, eventdata, handles)
@@ -125,7 +123,7 @@ function query_Callback(hObject, eventdata, handles)
 [filename, filepath] = uigetfile('*.png','Search Image to be displayed');
 fullname = [filepath filename];
 img = imread(fullname);
-id = im2double(img);
+id = im2double(rgb2gray(img));
 global m;
 m(1,1) = 0;
 imean = mean(id(:));
@@ -154,7 +152,6 @@ global m;
 global db;
 global Folder;
 global Image_fullname;
-%set(handles.text2, 'string',db(10,8));
 for i = 1:length(Image_fullname)
     dis = 0;
     for j = 2:8
